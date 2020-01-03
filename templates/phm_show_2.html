@@ -1,0 +1,208 @@
+{% extends "main.html" %}
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    <link rel="stylesheet" href="{% static 'css/print.css' %}" media="print">
+{% endblock %}
+
+{% block mainbody %}
+    {# -----------------PART 0---------------#}
+    <h1 id="part-0">一. 数据集概述</h1>
+    <h2>维度信息</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Number of observations</td>
+                    <td id="part0-obsv-num"></td>
+                </tr>
+                <tr>
+                    <td>Number of features</td>
+                    <td id="part0-feat-num"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h2>属性信息</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Variables</th>
+                    <th>Types</th>
+                    <th>Missing Count</th>
+                    <th>Missing Percent</th>
+                    <th>Unique Count</th>
+                    <th>Unique Percent</th>
+                </tr>
+                </thead>
+                <tbody id="part0-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+
+    {# -----------------PART 1---------------#}
+    <h1 id="part-1">二· 理解目标</h1>
+
+    <div id="part1-cat1" style="display: none;">
+        <blockquote>
+            <p>
+                分类问题是用于将事物打上一个标签，通常结果为离散值。分类方法是一种对离散型随机变量建模或预测的监督学习算法。使用案例包括邮件过滤、金融欺诈和预测雇员异动等输出为类别的任务。分类算法通常适用于预测一个类别（或类别的概率）而不是连续的数值。</p>
+        </blockquote>
+        <div class="row">
+            <div class="col-md-12" id="top_x_div"></div>
+        </div>
+    </div>
+
+    <div id="part1-cat" style="display: none;">
+        <blockquote>
+            <p>
+                回归方法是一种对数值型连续随机变量进行预测和建模的监督学习算法。使用案例一般包括房价预测、股票走势或测试成绩等。回归任务的特点是标注的数据集具有数值型的目标变量，即每一个观察样本都有一个数值型的标注真值以监督算法。</p>
+        </blockquote>
+
+        <h3>描述性统计摘要信息</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table" id="part1-desc-table">
+                    <thead>
+                    <tr>
+                        <th>count</th>
+                        <th>unique</th>
+                        <th>top</th>
+                        <th>freq</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ part_1_descriptive_statistics_summary.count }}</td>
+                        <td>{{ part_1_descriptive_statistics_summary.unique }}</td>
+                        <td>{{ part_1_descriptive_statistics_summary.top }}</td>
+                        <td>{{ part_1_descriptive_statistics_summary.freq }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <h3>目标的取值分布图</h3>
+        <div class="row">
+            <div class="col-md-12" id="part_1_chart_div_1"></div>
+        </div>
+
+        <h3>偏度和峰度</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>偏度</th>
+                        <th>峰度</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td id="part1-skewness">{{ part_1_skewness }}</td>
+                        <td id="part1-kurtosis">{{ part_1_kurtosis }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            偏度是描述数据分布形态的统计量，其描述的是某总体取值分布的对称性。偏度为0表示数据分布形态与正态分布的偏斜程度相同；偏度大于0表示数据分布形态与正态分布相比为正偏或右偏，即数据右端有较多的极端值；偏度小于0表示其数据分布形态与正态分布相比为负偏或左偏，即数据左端有较多的极端值。偏度的绝对值数值越大表示其分布形态的偏斜程度越大。
+                        </td>
+                        <td>
+                            峰度是描述数据取值分布形态陡缓程度的统计量。峰度为0表示该数据分布与正态分布的陡缓程度相同；峰度大于0表示该数据分布与正态分布相比较为陡峭，为尖顶峰；峰度小于0表示该数据分布与正态分布相比较为平坦，为平顶峰。峰度的绝对值数值越大表示其分布形态的陡缓程度与正态分布的差异程度越大。
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    {# -----------------PART 2---------------#}
+    <h1 id="part-2">三· 单一属性分析</h1>
+
+    <blockquote>
+        <p>数据集中共有 <span id="part2-length">-</span> 个属性，列表如下。</p>
+    </blockquote>
+
+    <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
+        <ul id="myTabs" class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="dropdown">
+                <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown"
+                   aria-controls="myTabDrop1-contents">
+                    属性列表（可选择） <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents"
+                    style="max-height: 200px; overflow-y: auto;"></ul>
+            </li>
+        </ul>
+        <div id="myTabContent" class="tab-content"></div>
+    </div>
+
+
+    {# -----------------PART 3---------------#}
+    <h1 id="part-3">四· 属性关系分析</h1>
+
+    <h3>热度图</h3>
+    <blockquote>
+        <p class="text-left">属性相关系数矩阵（协方差）
+            数据样本通常由多维属性的构成的，若把每个属性维度看成一个随机变量，可以借助随机变量的协方差研究属性之间的关系。协方差是对两个随机变量联合分布线性相关程度的一种度量。
+            若协方差为正，说明两个变量在变化过程中同方向，协方差越大说明同向程度越高；
+            若协方差为负，说明两个变量在变化过程中反方向，协方差越小说明反向程度越高；
+            若协方差为0，说明两个变量不线性相关。</p>
+    </blockquote>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="heatmap_div" style=""></div>
+        </div>
+    </div>
+
+
+    {# -----------------PART 4---------------#}
+    <h1 id="part-4">五· 属性与类别的关系分析</h1>
+
+    <div id="part4-cat1" style="display: none;">
+        <h3>多维尺度分析</h3>
+        <blockquote>
+            <p class="text-left">
+                对于分类问题，我们希望寻得一个属性空间：在此空间内，相同类别的数据样本之间的距离尽可能地小，不同类别的数据样本之间的距离尽可能的大。
+                下图展示了转化至二维空间后的数据样本。
+            </p>
+        </blockquote>
+    </div>
+
+    <div id="part4-cat" style="display: none;">
+        <h3>属性与目标的相关系数（协方差）</h3>
+        <blockquote>
+            <p class="text-left">
+                属性与目标的相关系数（协方差）
+                若将属性与目标均看作随机变量，则可以借助随机变量的协方差研究二者之间的关系。协方差是对两个随机变量联合分布线性相关程度的一种度量。
+                若协方差为正，说明两个变量在变化过程中同方向，协方差越大说明同向程度越高；
+                若协方差为负，说明两个变量在变化过程中反方向，协方差越小说明反向程度越高；
+                若协方差为0，说明两个变量不线性相关。
+            </p>
+        </blockquote>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" id="part_4_chart_div_1"></div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="/static/js/draw.js"></script>
+    <script src="/static/js/tools.js"></script>
+    <script src="/jsonp/result/{{ task_id|safe }}.js"></script>
+{% endblock %}

@@ -1,0 +1,50 @@
+body {
+    padding-top: 50px;
+}
+
+h1 {
+    /*position: relative;*/
+}
+
+h1 i {
+    /*position: absolute;*/
+    /*display: inline-block;*/
+    /*top: -60px;*/
+    /*left: 0;*/
+}
+
+.content1 {
+    /*width: 900px;*/
+    /*height: 200px;*/
+    /*-webkit-writing-mode: vertical-rl;*/
+    /*writing-mode: vertical-rl;*/
+    /*padding-top: 40px;*/
+    /*font-size: 16px;*/
+}
+
+.content2 {
+    /*width: 900px;*/
+    /*height: 200px;*/
+    /*-webkit-writing-mode: vertical-lr;*/
+    /*writing-mode: vertical-lr;*/
+    /*padding-top: 40px;*/
+    /*font-size: 16px;*/
+}
+
+#myTabContent {
+    /*position: relative;*/
+    /*overflow: hidden;*/
+}
+#myTabContent > .tab-pane {
+    /*position: absolute;*/
+    /*display: block;*/
+    /*opacity: 0;*/
+    /*visibility: hidden;*/
+    /*width: 100%;*/
+}
+#myTabContent > .tab-pane.active {
+    /*position: relative;*/
+    /*display: block;*/
+    /*opacity: 1;*/
+    /*visibility: visible;*/
+}

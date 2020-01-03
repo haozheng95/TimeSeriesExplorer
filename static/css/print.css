@@ -1,0 +1,10 @@
+#myTabs {
+    display: none;
+}
+
+#myTabContent > .tab-pane {
+    position: relative;
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}

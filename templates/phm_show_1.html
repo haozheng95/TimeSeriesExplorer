@@ -1,0 +1,663 @@
+{% extends "main.html" %}
+{% block mainbody %}
+    <h1>
+        一·
+        todo标题
+    </h1>
+    <blockquote>
+        <i id="part-1"></i>
+        <p>todo标题描述</p>
+    </blockquote>
+    <h2>todo子标题</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Number of observations</td>
+                    <td>{{ dimension_info.Number_of_observations }}</td>
+                </tr>
+                <tr>
+                    <td>Number of features</td>
+                    <td>{{ dimension_info.Number_of_features }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h2>todo子标题</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Variables</th>
+                    <th>Types</th>
+                    <th>Missing Count</th>
+                    <th>Missing Percent</th>
+                    <th>Unique Count</th>
+                    <th>Unique Percent</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for row in feature_info %}
+                    <tr>
+                        <td>{{ row.feature }}</td>
+                        <td>{{ row.type }}</td>
+                        <td>{{ row.missing_count }}</td>
+                        <td>{{ row.missing_percent }}</td>
+                        <td>{{ row.unique_count }}</td>
+                        <td>{{ row.unique_percent }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h1>
+        二·
+        理解目标
+    </h1>
+    {% if problem_category == 1 %}
+        <blockquote>
+            <i id="part-1"></i>
+            <p>分类问题是用于将事物打上一个标签，通常结果为离散值。
+                分类方法是一种对离散型随机变量建模或预测的监督学习算法。使用案例包括邮件过滤、金融欺诈和预测雇员异动等输出为类别的任务。分类算法通常适用于预测一个类别（或类别的概率）而不是连续的数值。</p>
+        </blockquote>
+        <div class="row">
+            <div class="col-md-12" id="top_x_div"></div>
+        </div>
+    {% else %}
+        <blockquote>
+            <p>
+                回归方法是一种对数值型连续随机变量进行预测和建模的监督学习算法。使用案例一般包括房价预测、股票走势或测试成绩等。回归任务的特点是标注的数据集具有数值型的目标变量，即每一个观察样本都有一个数值型的标注真值以监督算法。</p>
+        </blockquote>
+        <h3>描述性统计摘要信息</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>count</th>
+                        <th>unique</th>
+                        <th>top</th>
+                        <th>freq</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ part_1_descriptive_statistics_summary.count }}</td>
+                        <td>{{ part_1_descriptive_statistics_summary.unique }}</td>
+                        <td>{{ part_1_descriptive_statistics_summary.top }}</td>
+                        <td>{{ part_1_descriptive_statistics_summary.freq }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <h3>目标的取值分布图</h3>
+        <div class="row">
+            <div class="col-md-12" id="part_1_chart_div_1"></div>
+        </div>
+
+        <h3>偏度和峰度</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>偏度</th>
+                        <th>峰度</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ part_1_skewness }}</td>
+                        <td>{{ part_1_kurtosis }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            偏度是描述数据分布形态的统计量，其描述的是某总体取值分布的对称性。偏度为0表示数据分布形态与正态分布的偏斜程度相同；偏度大于0表示数据分布形态与正态分布相比为正偏或右偏，即数据右端有较多的极端值；偏度小于0表示其数据分布形态与正态分布相比为负偏或左偏，即数据左端有较多的极端值。偏度的绝对值数值越大表示其分布形态的偏斜程度越大。
+                        </td>
+                        <td>
+                            峰度是描述数据取值分布形态陡缓程度的统计量。峰度为0表示该数据分布与正态分布的陡缓程度相同；峰度大于0表示该数据分布与正态分布相比较为陡峭，为尖顶峰；峰度小于0表示该数据分布与正态分布相比较为平坦，为平顶峰。峰度的绝对值数值越大表示其分布形态的陡缓程度与正态分布的差异程度越大。
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+    <h1>
+        三·
+        单一特征分析
+    </h1>
+    <blockquote>
+        <i id="part-2"></i>
+        <p>数据集中共有 {{ part_2_view_list | length }} 个特征，列表如下。</p>
+        {#        <p>数据集中共有 90 个特征，列表如下。</p>#}
+    </blockquote>
+    <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
+        <ul id="myTabs" class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="dropdown">
+                <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown"
+                   aria-controls="myTabDrop1-contents">特征列表（可选择） <span class="caret"></span></a>
+                <ul class="dropdown-menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
+                    {% for row in part_2_view_list %}
+                        <li><a href="#{{ row.feature }}" role="tab" id="{{ row.feature }}-tab" data-toggle="tab"
+                               aria-controls="{{ row.feature }}">@{{ row.feature }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            {% for row in part_2_view_list %}
+                <div role="tabpanel" class="tab-pane fade in active" id="{{ row.feature }}"
+                     aria-labelledby="{{ row.feature }}-tab">
+                    <h2>特征:{{ row.feature }}
+                        <small>缺失值:{{ row.missing_data }}</small>
+                    </h2>
+                    <h3>特征可视化
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-12" id="{{ row.feature|safe }}part_2_chart_div_3_1">
+                        </div>
+                    </div>
+                    <h3>描述性统计摘要信息</h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>count</th>
+                                    <th>mean</th>
+                                    <th>std</th>
+                                    <th>25%</th>
+                                    <th>50%</th>
+                                    <th>75%</th>
+                                    <th>max</th>
+                                    <th>min</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{{ row.feature_desc.descriptive_statistics_summary.count }}</td>
+                                    <td>{{ row.feature_desc.descriptive_statistics_summary.mean }}</td>
+                                    <td>{{ row.feature_desc.descriptive_statistics_summary.std }}</td>
+                                    <td>{{ row.feature_desc.descriptive_statistics_summary.b25 }}</td>
+                                    <td>{{ row.feature_desc.descriptive_statistics_summary.b50 }}</td>
+                                    <td>{{ row.feature_desc.descriptive_statistics_summary.b75 }}</td>
+                                    <td>{{ row.feature_desc.descriptive_statistics_summary.max }}</td>
+                                    <td>{{ row.feature_desc.descriptive_statistics_summary.min }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3>取值分布图
+                    </h3>
+                    <div class="row">
+
+                        <div class="col-md-12" id="{{ row.feature|safe }}part_2_chart_div_1">
+                        </div>
+                    </div>
+
+                    <h3>偏度和峰度</h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>偏度</th>
+                                    <th>峰度</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{{ row.feature_desc.skewness }}</td>
+                                    <td>{{ row.feature_desc.kurtosis }}</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        偏度是描述数据分布形态的统计量，其描述的是某总体取值分布的对称性。偏度为0表示数据分布形态与正态分布的偏斜程度相同；偏度大于0表示数据分布形态与正态分布相比为正偏或右偏，即数据右端有较多的极端值；偏度小于0表示其数据分布形态与正态分布相比为负偏或左偏，即数据左端有较多的极端值。偏度的绝对值数值越大表示其分布形态的偏斜程度越大。
+                                    </td>
+                                    <td>
+                                        峰度是描述数据取值分布形态陡缓程度的统计量。峰度为0表示该数据分布与正态分布的陡缓程度相同；峰度大于0表示该数据分布与正态分布相比较为陡峭，为尖顶峰；峰度小于0表示该数据分布与正态分布相比较为平坦，为平顶峰。峰度的绝对值数值越大表示其分布形态的陡缓程度与正态分布的差异程度越大。
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3>移动统计 <br>
+                        <small>移动统计通常用于消除时间序列数据中的短期波动并突出长期趋势。
+                        </small>
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-6" id="{{ row.feature|safe }}part_2_chart_div_2_1">
+                        </div>
+                        <div class="col-md-6" id="{{ row.feature|safe }}part_2_chart_div_2_2">
+                        </div>
+                    </div>
+
+                    <h3>分解为趋势，季节性和残差
+                        <br>
+                        <small>
+                            时间序列分解：趋势，季节性和残差
+                            时间序列数据通常包含多种潜在模式，一种有效的处理方式是将其分解为多个成分，每个成分都对应一种基础模式。
+                        </small>
+                    </h3>
+
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10" style="border:1px solid #000"
+                             id="{{ row.feature|safe }}part_2_chart_div_3_2">
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10" style="border-left:1px solid #000;border-right: 1px solid #000"
+                             id="{{ row.feature|safe }}part_2_chart_div_3_3">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10" style="border:1px solid #000"
+                             id="{{ row.feature|safe }}part_2_chart_div_3_4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10" style="padding-left: 0px;">
+                            <p class="text-left">
+                                <small>
+                                    <strong>趋势：</strong>
+                                    当一个时间序列数据长期增长或者长期下降时，表示该序列有趋势
+                                    。在某些场合，趋势代表着“转换方向”。例如从增长的趋势转换为下降趋势。
+                                </small>
+                            </p>
+                            <p class="text-left">
+                                <small>
+                                    <strong>季节性：</strong>
+                                    当时间序列中的数据受到季节性因素（例如一年的时间或者一周的时间）的影响时，表示该序列具有季节性
+                                    。季节性总是一个已知并且固定的频率。由于抗糖尿病药物的成本在年底时会有变化，导致上述抗糖尿药物的月销售额存在季节性。
+                                </small>
+                            </p>
+                            <p class="text-left">
+                                <small>
+                                    <strong>周期性：</strong>
+                                    当时间序列数据存在不固定频率的上升和下降时，表示该序列有周期性 。周期波动通常至少持续两年。
+
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <h1>
+        四·
+        特征关系分析
+    </h1>
+    <h3>热度图</h3>
+    <blockquote>
+        <i id="part-3"></i>
+        <p class="text-left">特征相关系数矩阵（协方差）
+            数据样本通常由多维特征的构成的，若把每个特征维度看成一个随机变量，可以借助随机变量的协方差研究特征之间的关系。协方差是对两个随机变量联合分布线性相关程度的一种度量。
+            若协方差为正，说明两个变量在变化过程中同方向，协方差越大说明同向程度越高；
+            若协方差为负，说明两个变量在变化过程中反方向，协方差越小说明反向程度越高；
+            若协方差为0，说明两个变量不线性相关。</p>
+    </blockquote>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div id="heatmap_div" style=""></div>
+        </div>
+    </div>
+    <h1>
+        五·
+        特征与类别的关系分析
+    </h1>
+    {% if problem_category == 1 %}
+        <h3>多维尺度分析</h3>
+        <blockquote>
+            <i id="part-4"></i>
+            <p class="text-left">
+                对于分类问题，我们希望寻得一个特征空间：在此空间内，相同类别的数据样本之间的距离尽可能地小，不同类别的数据样本之间的距离尽可能的大。
+                下图展示了转化至二维空间后的数据样本。
+            </p>
+        </blockquote>
+    {% else %}
+        <h3>特征与目标的相关系数（协方差）</h3>
+        <blockquote>
+            <i id="part-4"></i>
+            <p class="text-left">
+                特征与目标的相关系数（协方差）
+                若将特征与目标均看作随机变量，则可以借助随机变量的协方差研究二者之间的关系。协方差是对两个随机变量联合分布线性相关程度的一种度量。
+                若协方差为正，说明两个变量在变化过程中同方向，协方差越大说明同向程度越高；
+                若协方差为负，说明两个变量在变化过程中反方向，协方差越小说明反向程度越高；
+                若协方差为0，说明两个变量不线性相关。
+            </p>
+        </blockquote>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12" id="part_4_chart_div_1"></div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+
+        google.charts.load('current', {'packages': ['corechart', 'line', 'bar']});
+        google.charts.setOnLoadCallback(part_1_chart_div_1_chart);
+        google.charts.setOnLoadCallback(part_2_chart_div_1_chart);
+        google.charts.setOnLoadCallback(part_2_chart_div_2_chart);
+        google.charts.setOnLoadCallback(part_2_chart_div_3_chart);
+        google.charts.setOnLoadCallback(part_4_chart_div_1_chart);
+
+        function part_1_chart_div_1_chart() {
+            {% if problem_category == 1 %}
+                var a = [["x", "y"]];
+                var b = {{ part_1 | safe }};
+                var c = a.concat(b);
+                var data = new google.visualization.arrayToDataTable(c);
+
+                var options = {
+                    title: '',
+                    height: 500,
+                    legend: {position: 'none'},
+                    chart: {
+                        title: '',
+                        subtitle: ''
+                    },
+                    bars: 'horizontal', // Required for Material Bar Charts.
+                    axes: {
+                        x: {
+                            0: {side: 'top', label: 'Percentage'} // Top x-axis.
+                        }
+                    },
+                    bar: {groupWidth: "90%"}
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('top_x_div'));
+                chart.draw(data, options);
+            {% else %}
+                var a = [["percentile", "value"]];
+                var b = {{ histogram_list | safe }};
+                var c = a.concat(b);
+                var data = google.visualization.arrayToDataTable(c);
+
+                var options = {
+                    title: '',
+                    histogram: {lastBucketPercentile: 5},
+                    legend: 'none',
+                    height: 500,
+                    hAxis: {title: 'value',},
+                    vAxis: {title: 'percentile',},
+                };
+
+                var chart = new google.visualization.Histogram(document.getElementById('part_1_chart_div_1'));
+                chart.draw(data, options);
+            {% endif %}
+        }
+
+
+        function part_2_chart_div_1_chart() {
+            {% for row in part_2_view_list %}
+                var a = [["time", "value"]];
+                var b = {{ row.feature_desc.histogram_list|safe }};
+                var c = a.concat(b);
+                var data = google.visualization.arrayToDataTable(c);
+
+                var options = {
+                    histogram: {lastBucketPercentile: 15},
+                    bar: {gap: 0},
+                    legend: 'none',
+                    chartArea: {width: 601},
+                    height: 300,
+                    hAxis: {title: 'time'},
+                };
+
+                var chart = new google.visualization.Histogram(document.getElementById('{{ row.feature|safe  }}' + 'part_2_chart_div_1'));
+                chart.draw(data, options);
+            {% endfor %}
+        }
+
+
+        function part_2_chart_div_2_chart() {
+            {% for row in part_2_view_list %}
+                var a = [["point", "rolling_mean"]];
+                var b = {{ row.feature_desc.rolling_mean_list|safe }};
+                var c = a.concat(b);
+                var data = google.visualization.arrayToDataTable(c);
+                var options = {
+                    title: '移动平均值:通常用于消除时间序列数据中的短期波动并突出长期趋势',
+                    curveType: 'function',
+                    legend: {position: 'none'},
+                    height: 300,
+                    hAxis: {title: 'time',},
+                    vAxis: {title: 'value',},
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('{{ row.feature|safe  }}part_2_chart_div_2_1'));
+                chart.draw(data, options);
+
+                options = {
+                    title: '移动标准差',
+                    curveType: 'function',
+                    legend: {position: 'none'},
+                    height: 300,
+                    hAxis: {title: 'time',},
+                    vAxis: {title: 'value',},
+                };
+                a = [["point", "rolling_std"]];
+                b = {{ row.feature_desc.rolling_std_list|safe }};
+                c = a.concat(b);
+                data = google.visualization.arrayToDataTable(c);
+                chart = new google.visualization.LineChart(document.getElementById('{{ row.feature|safe  }}part_2_chart_div_2_2'));
+                chart.draw(data, options);
+            {% endfor %}
+        }
+
+
+        function part_2_chart_div_3_chart() {
+            var nan = NaN;
+            {% for row in part_2_view_list %}
+                var data = new google.visualization.DataTable();
+                data.addColumn('number', '');
+                data.addColumn('number', '趋势');
+
+                data.addRows({{ row.feature_desc.trend_list|safe }});
+
+                var options = {
+                    chart: {
+                        title: '',
+                        subtitle: ''
+                    },
+                    height: 120,
+                    axes: {
+                        x: {
+                            0: {side: 'top'}
+                        }
+                    },
+                };
+                var chart = new google.charts.Line(document.getElementById('{{ row.feature|safe  }}part_2_chart_div_3_2'));
+                chart.draw(data, google.charts.Line.convertOptions(options));
+
+                data = new google.visualization.DataTable();
+                data.addColumn('number', '');
+                data.addColumn('number', '季节性');
+
+                data.addRows({{ row.feature_desc.seasonal_list|safe }});
+
+                chart = new google.charts.Line(document.getElementById('{{ row.feature|safe  }}part_2_chart_div_3_3'));
+                chart.draw(data, google.charts.Line.convertOptions(options));
+
+                data = new google.visualization.DataTable();
+                data.addColumn('number', '');
+                data.addColumn('number', '周期性');
+
+                data.addRows({{ row.feature_desc.resid_list|safe }});
+                chart = new google.charts.Line(document.getElementById('{{ row.feature|safe  }}part_2_chart_div_3_4'));
+                chart.draw(data, google.charts.Line.convertOptions(options));
+
+
+                data = new google.visualization.DataTable();
+                data.addColumn('number', '');
+                data.addColumn('number', 'observed');
+
+                data.addRows({{ row.feature_desc.observed_list|safe }});
+                {#chart = new google.charts.Line(document.getElementById('{{ row.feature|safe  }}part_2_chart_div_3_1'));#}
+
+                options = {
+                    chart: {
+                        title: '',
+                        subtitle: ''
+                    },
+                    height: 400,
+                    legend: {position: 'none'},
+                    hAxis: {title: 'time',},
+                    vAxis: {title: 'value',},
+                };
+                chart = new google.visualization.LineChart(document.getElementById('{{ row.feature|safe  }}part_2_chart_div_3_1'));
+                chart.draw(data, google.charts.Line.convertOptions(options));
+            {% endfor %}
+        }
+
+
+        var heatmap_data = [
+            {
+                z: {{ matrix|safe }},
+                x:{{ feature_list|safe }},
+                y:{{ feature_list|safe }},
+                type: 'heatmap',
+                {#showscale: true,#}
+            }
+        ];
+
+        var layout = {
+            title: '',
+            annotations: [],
+            xaxis: {
+                ticks: '',
+                side: '',
+                autosize: true,
+            },
+            yaxis: {
+                ticks: '',
+                ticksuffix: ' ',
+                autosize: true,
+
+            },
+            width: 1000,
+            height: 1000,
+            margin: {
+
+                l: 230,
+
+                r: 0,
+
+                b: 200,
+
+                t: 20,
+
+                pad: 4
+
+            }
+
+        };
+
+        var zValues = {{ matrix|safe }};
+        var xValues = {{ feature_list|safe }};
+        var yValues = {{ feature_list|safe }};
+
+        for (var i = 0; i < yValues.length; i++) {
+            break
+            for (var j = 0; j < xValues.length; j++) {
+                var currentValue = zValues[i][j];
+                var result = {
+                    xref: 'x1',
+                    yref: 'y1',
+                    x: xValues[j],
+                    y: yValues[i],
+                    text: currentValue.toFixed(2),
+                    font: {
+                        family: 'Arial',
+                        size: 10,
+                        color: 'black'
+                    },
+                    showarrow: false,
+                };
+                layout.annotations.push(result);
+            }
+        }
+
+        Plotly.plot('heatmap_div', heatmap_data, layout);
+
+
+        function part_4_chart_div_1_chart() {
+
+            {% if problem_category == 1 %}
+                var data = google.visualization.arrayToDataTable({{ features_target_rel|safe }});
+
+                var options = {
+                    title: '',
+                    hAxis: {title: '',},
+                    vAxis: {title: '',},
+                    chartArea: {top: 10},
+                    legend: 'none',
+                    height: 400,
+                };
+
+                var chart = new google.visualization.ScatterChart(document.getElementById('part_4_chart_div_1'));
+
+                chart.draw(data, options);
+            {% else %}
+                var a = [["features", "values", {role: "style"}]];
+                var b = {{ features_target_rel|safe }};
+                var c = a.concat(b);
+                var data = new google.visualization.arrayToDataTable(c);
+
+                var options = {
+                    height: 800,
+                    chartArea: {top: 0},
+                    fontSize: 10,
+                    legend: {position: "none"},
+                };
+
+                var view = new google.visualization.DataView(data);
+                view.setColumns([0, 1,
+                    {
+                        calc: "stringify",
+                        sourceColumn: 1,
+                        type: "string",
+                        role: "annotation"
+                    },
+                    2]);
+
+                var chart = new google.visualization.BarChart(document.getElementById('part_4_chart_div_1'));
+                // Convert the Classic options to Material options.
+                {#chart.draw(data, google.charts.Bar.convertOptions(options));#}
+                chart.draw(view, options);
+            {% endif %}
+        }
+    </script>
+    )
+    <!-- Custom JS -->
+    {% load static %}
+    <script src="{% static 'js/show.js' %}"></script>
+{% endblock %}
